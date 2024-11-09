@@ -11,7 +11,7 @@ This documentation was created to describe good practises when:
   3. **Best Practices**
   3. **Examples**
 
-### Principles of Function Design
+### 🔥 Principles of Function Design
 
 When designing functions in Go, keep the following principles in mind:
   - **Single Responsibility:** <em>Each function should perform one task or have a single purpose. This improves readability and makes testing easier.</em>
@@ -19,7 +19,7 @@ When designing functions in Go, keep the following principles in mind:
   - **Use Meaningful Names:** <em>Function names should be descriptive of their action. For example, use CalculateTotal instead of DoCalculation.</em>
   - **Minimize Side Effects:** <em>Avoid altering global state or shared data inside functions. Functions that modify global variables are harder to test and debug.</em>
 
-### Writing Testable Functions
+### 🔥 Writing Testable Functions
 
 Ensuring that your functions are testable is essential for writing reliable and maintainable code. Below are practices for writing testable Go functions.
 
@@ -108,3 +108,42 @@ func TestSum(t *testing.T) {
 }
 
 ```
+
+### 🔥 Best Practices
+
+**1. Handle Errors Explicitly**
+
+In Go, error handling is explicit, which improves reliability. Always check and handle errors returned by functions.
+
+<em>Example:</em>
+```
+func OpenFile(path string) (*os.File, error) {
+    file, err := os.Open(path)
+    if err != nil {
+        return nil, fmt.Errorf("failed to open file %s: %w", path, err)
+    }
+    return file, nil
+}
+
+```
+
+**2. Avoid Global State**
+
+Functions that rely on or modify global state can introduce bugs and make testing challenging. Whenever possible, pass necessary values as parameters.
+
+**3. Write Clear and Concise Documentation**
+
+Use comments to describe complex logic or any potential edge cases. Documenting function behavior will make it easier for others (and future you) to understand and maintain the code
+
+<em>Example:</em>
+```
+// CalculateTotal returns the sum of all values in the prices slice,
+// applying a given tax rate to each price.
+func CalculateTotal(prices []float64, taxRate float64) float64 {
+    // Function logic here
+}
+```
+
+**4. Ensure Concurrency Safety**
+
+If your functions use goroutines or shared resources, ensure concurrency safety with appropriate synchronization, like using mutexes or channels.
